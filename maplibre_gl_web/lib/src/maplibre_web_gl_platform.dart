@@ -441,10 +441,9 @@ class MapLibreMapController extends MapLibrePlatform
       'latLng': LatLng(e.lngLat.lat.toDouble(), e.lngLat.lng.toDouble()),
       if (features.isNotEmpty) "id": features.first.id,
     };
+    onMapClickPlatform(payload);
     if (features.isNotEmpty) {
       onFeatureTappedPlatform(payload);
-    } else {
-      onMapClickPlatform(payload);
     }
   }
 
