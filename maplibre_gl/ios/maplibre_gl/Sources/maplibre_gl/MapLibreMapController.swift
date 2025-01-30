@@ -1013,6 +1013,12 @@ class MapLibreMapController: NSObject, FlutterPlatformView, MLNMapViewDelegate, 
         let point = sender.location(in: mapView)
         let coordinate = mapView.convert(point, toCoordinateFrom: mapView)
 
+        channel?.invokeMethod("map#onMapClick", arguments: [
+                "x": point.x,
+                "y": point.y,
+                "lng": coordinate.longitude,
+                "lat": coordinate.latitude,
+            ])
         let result = firstFeatureOnLayers(at: point)
         if let feature = result.feature {
             channel?.invokeMethod("feature#onTap", arguments: [
@@ -1023,14 +1029,9 @@ class MapLibreMapController: NSObject, FlutterPlatformView, MLNMapViewDelegate, 
                         "lat": coordinate.latitude,
                         "layerId": result.layerId,
             ])
-        } else {
-            channel?.invokeMethod("map#onMapClick", arguments: [
-                "x": point.x,
-                "y": point.y,
-                "lng": coordinate.longitude,
-                "lat": coordinate.latitude,
-            ])
-        }
+        } 
+            
+        
     }
 
     fileprivate func invokeFeatureDrag(

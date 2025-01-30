@@ -1684,12 +1684,11 @@ final class MapLibreMapController
     arguments.put("y", pointf.y);
     arguments.put("lng", point.getLongitude());
     arguments.put("lat", point.getLatitude());
+    methodChannel.invokeMethod("map#onMapClick", arguments);
     if (featureLayerPair != null && featureLayerPair.first != null) {
       arguments.put("layerId", featureLayerPair.second);
       arguments.put("id", featureLayerPair.first.id());
       methodChannel.invokeMethod("feature#onTap", arguments);
-    } else {
-      methodChannel.invokeMethod("map#onMapClick", arguments);
     }
     return true;
   }
